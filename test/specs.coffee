@@ -410,3 +410,36 @@ describe 'jquery.payment', ->
       setTimeout ->
         assert.equal $expiry.val(), '05 / '
         done()
+
+    it 'should format a single digit > 1 correctly on input events', (done) ->
+      $expiry = $('<input type=text>').payment('formatCardExpiry')
+      $expiry.val('5')
+
+      e = $.Event('input')
+      $expiry.trigger(e)
+
+      setTimeout ->
+        assert.equal $expiry.val(), '05 / '
+        done()
+
+    it 'should format a single 1 followed by a slash correctly on input events', (done) ->
+      $expiry = $('<input type=text>').payment('formatCardExpiry')
+      $expiry.val('1/')
+
+      e = $.Event('input')
+      $expiry.trigger(e)
+
+      setTimeout ->
+        assert.equal $expiry.val(), '01 / '
+        done()
+
+    it 'should format two digits with the second > 2 correctly on input events', (done) ->
+      $expiry = $('<input type=text>').payment('formatCardExpiry')
+      $expiry.val('13')
+
+      e = $.Event('input')
+      $expiry.trigger(e)
+
+      setTimeout ->
+        assert.equal $expiry.val(), '01 / 3'
+        done()

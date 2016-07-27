@@ -614,10 +614,15 @@ $.payment.formatExpiry = (expiry) ->
     mon = mon.substring(0, 1)
     sep = ''
 
-  else if mon.length == 2 or sep.length > 0
+  else if mon.length == 2
+    m1 = parseInt(mon[0], 10)
+    m2 = parseInt(mon[1], 10)
+    if m2 > 2
+      mon = "0#{m1}"
+      year = m2
     sep = ' / '
 
-  else if mon.length == 1 and mon not in ['0', '1']
+  else if mon.length == 1 and (mon not in ['0', '1'] or sep.length > 0)
     mon = "0#{mon}"
     sep = ' / '
 
